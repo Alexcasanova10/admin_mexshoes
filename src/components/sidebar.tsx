@@ -45,7 +45,7 @@ const ExampleSidebar: FC = function () {
                 Inicio
               </Sidebar.Item>
               <Sidebar.Item
-                href="/e-commerce/products"
+                href="/productos"
                 icon={FaWarehouse}
                 className={
                   "/e-commerce/products" === currentPage
@@ -56,7 +56,7 @@ const ExampleSidebar: FC = function () {
                 Productos
               </Sidebar.Item>
               <Sidebar.Item
-                href="/users/list"
+                href="/pedidos"
                 icon={MdOutlineLocalShipping}
                 className={
                   "/users/list" === currentPage
@@ -86,7 +86,7 @@ const ExampleSidebar: FC = function () {
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
               <Sidebar.Item
-                href="https://github.com/themesberg/flowbite-react/"
+                href="/"
                 icon={CiLogout}
               >
                 Cerrar Sesión
