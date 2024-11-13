@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import api from "../Constants/api";
 import { Dispatch } from "redux";
 
@@ -18,9 +19,17 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 // Actualizar producto
 export const updateProductAction = (product: any) => async (dispatch: Dispatch) => {
-  const response = await api.put(`/products/${product.id}`, product);
+  const response = await api.put(`api/admin/product/${product._id}`, product);
   dispatch({ type: UPDATE_PRODUCT, payload: response.data });
 };
+
+// Actualizar producto status
+export const updateProductStatusAction = (product: any) => async (dispatch: Dispatch) => {
+  const response = await api.put(`api/admin/product/${product._id}/status`, product);
+  dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+};
+
+
 
 // Eliminar producto
 export const deleteProductAction = (id: string) => async (dispatch: Dispatch) => {

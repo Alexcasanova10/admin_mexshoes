@@ -55,8 +55,8 @@ import  store  from './Redux/store';
 import DashboardPage from "./pages";
 import SignInPage from "./pages/authentication/sign-in";
 import SignUpPage from "./pages/authentication/sign-up";
-import EcommerceProductsPage from "./pages/e-commerce/products";
-import EcommerceProductsPageDos from "./pages/e-commerce/oldproduct_pg";
+// import EcommerceProductsPage from "./pages/e-commerce/products";
+import EcommerceProductsPage from "./pages/e-commerce/oldproduct_pg";
 import OrdersPage from "./pages/oders/pedidos";
 import ConveyorPage from "./pages/conveyor/banda_trans";
 
@@ -70,16 +70,15 @@ const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    {/* Envolvemos toda la aplicación en el Provider */}
-    <Provider store={store}>
+     <Provider store={store}>
       <Flowbite theme={{ theme }}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<DashboardPage />} index />
             <Route path="/authentication/sign-in" element={<SignInPage />} />
             <Route path="/authentication/sign-up" element={<SignUpPage />} />
+            {/* <Route path="/productos" element={<EcommerceProductsPage />} /> */}
             <Route path="/productos" element={<EcommerceProductsPage />} />
-            <Route path="/productosdos" element={<EcommerceProductsPageDos />} />
             <Route path="/pedidos" element={<OrdersPage />} />
             <Route path="/conveyor" element={<ConveyorPage />} />
           </Routes>

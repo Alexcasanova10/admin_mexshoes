@@ -33,7 +33,7 @@ import {
     productListAction,
     addProductAction,
     updateProductAction,
-    deleteProductAction,
+    updateProductStatusAction,
   } from "../../Redux/Actions/Product";
   import { Product } from "../../Redux/types";
   import { useDispatch, useSelector } from "react-redux";
@@ -43,7 +43,8 @@ import {
   const enumBrand = ["Adidas","Nike","Puma","Reebok","Charly","Vans","Panam","Otras"];
   
   
-  const EcommerceProductsPageDos: FC = function () {
+  
+  const EcommerceProductsPage: FC = function () {
   
     const dispatch = useAppDispatch();
     const { products } = useSelector((state: RootState) => state.productListReducer);
@@ -100,17 +101,27 @@ import {
       image:"",
       price: 0,
       brand: "",
+      sizes:[],
       countInStock:0,
       description:""     
     });
 
     const dispatch = useAppDispatch();
 
+    const handleSizeChange = (size: number) => {
+      const currentSizes = productData.sizes || [];
+      if (currentSizes.includes(size)) {
+        setProductData({ ...productData, sizes: currentSizes.filter(s => s !== size) });
+      } else {
+        setProductData({ ...productData, sizes: [...currentSizes, size] });
+      }
+    }; 
+    
     const handleAddProduct = () => {
       dispatch(addProductAction(productData));
       setOpen(false);
     };
-
+    
     return (
       <>
         <Button color="primary" onClick={() => setOpen(!isOpen)}>
@@ -127,71 +138,83 @@ import {
                 <div>
                   <Label htmlFor="productName">Nombre </Label>
                   <TextInput
-                    id="productName"
-                    name="productName"
-                    placeholder='Ejemplo: Adidas Forum'
-                    className="mt-1"
+                   placeholder="Nombre"
+                   value={productData.name || ""}
+                   onChange={(e) => setProductData({ ...productData, name: e.target.value })}
                   />
                 </div>
                 <div>
                   <Label htmlFor="productName">Imagen </Label>
                   <TextInput
-                    id="productName"
-                    name="productName"
-                    placeholder='Url de imagen'
-                    className="mt-1"
+                    placeholder="URL de Imagen"
+                    value={productData.image || ""}
+                    onChange={(e) => setProductData({ ...productData, image: e.target.value })}
                   />
                 </div>
                  
                 <div>
                   <Label htmlFor="brand">Marca</Label>
-                  <Select>
-                    <option value="">Filtro por marca</option>
+                  <Select value={productData.brand}
+                      onChange={(e) => setProductData({ ...productData, brand: e.target.value })}>
+                    <option value="">Seleccionar marca</option>
                     {enumBrand.map((brand) => (
                       <option key={brand} value={brand}>
                         {brand}
                       </option>
                     ))}
-                  </Select>
-                  
+                  </Select>                  
                 </div>
                 <div>
                   <Label htmlFor="price">Precio</Label>
                   <TextInput
-                    id="price"
-                    name="price"
+                    placeholder="1800"
                     type="number"
-                    placeholder="$1800"
-                    className="mt-1"
+                    value={productData.price || ""}
+                    onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
                   />
                 </div>
+                 
+
                 <div>
-                  <Label htmlFor="price">Tallas</Label>
-                  <TextInput
-                    id="price"
-                    name="price"
-                    type="text"
-                    placeholder="meter logica de tallas (poner cuadros)?"
-                    className="mt-1"
-                  />
+                  <Label htmlFor="sizes">Tallas</Label>
+                  <div className="grid grid-cols-3 gap-2 mt-2">
+                    {enumSizes.map((size) => (
+                      <div key={size} className="flex items-center">
+                        <Checkbox
+                          id={`size-${size}`}
+                          checked={productData.sizes?.includes(size)}
+                          onChange={() => handleSizeChange(size)}
+                        />
+                        <Label htmlFor={`size-${size}`} className="ml-2">
+                          {size}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
                 <div>
                   <Label htmlFor="price">Cantidad</Label>
                   <TextInput
-                    id="cantidad"
-                    name="cantidad"
+                    id="countInStock"
+                    name="countInStock"
                     type="number"
+                    value={productData.countInStock || ""}
+                    onChange={(e)=> setProductData({...productData, countInStock: parseFloat(e.target.value)})}
                     placeholder="Ejemplo: 10 unidades "
                     className="mt-1"
                   />
                 </div>
+                {/* <div className="lg:col-span-2"> */}
                 <div className="lg:col-span-2">
                   <Label htmlFor="producTable.Celletails">Detalles de productos</Label>
                   <Textarea
-                    id="producTable.Celletails"
-                    name="producTable.Celletails"
+                    id="description"
+                    name="description"
                     placeholder="Ejemplo: Calzado cómodo y con un gran estilo"
-                    rows={6}
+                    rows={3}
+                    value={productData.description || ""}
+                    onChange={(e)=> setProductData({...productData, description: e.target.value})}
                     className="mt-1"
                   />
                 </div>
@@ -200,7 +223,8 @@ import {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button color="primary" onClick={() => setOpen(false)}>
+            {/* <Button color="primary" onClick={(handleAddProduct) => setOpen(false)}> */}
+            <Button color="primary" onClick={handleAddProduct}>
               Añadir Producto
             </Button>
           </Modal.Footer>
@@ -209,7 +233,95 @@ import {
     );
   };
   
-  const EditProductModal: FC = function () {
+
+
+ 
+  // const DeleteProductModal: FC = function () {
+  //   const [isOpen, setOpen] = useState(false);
+  
+  //   return (
+  //     <>
+  //       <Button color="failure" onClick={() => setOpen(!isOpen)}>
+  //         <HiTrash className="mr-2 text-lg" />
+  //       </Button>
+  //       <Modal onClose={() => setOpen(false)} show={isOpen} size="md">
+  //         <Modal.Header className="px-3 pt-3 pb-0">
+  //           <span className="sr-only">Delete product</span>
+  //         </Modal.Header>
+  //         <Modal.Body className="px-6 pb-6 pt-0">
+  //           <div className="flex flex-col items-center gap-y-6 text-center">
+  //             <HiOutlineExclamationCircle className="text-7xl text-red-600" />
+  //             <p className="text-lg text-gray-500 dark:text-gray-300">
+  //               ¿Seguro que quieres dar de baja el producto?
+  //             </p>
+  //             <div className="flex items-center gap-x-3">
+  //               <Button color="failure" onClick={() => setOpen(false)}>
+  //                 Aceptar
+  //               </Button>
+  //               <Button color="gray" onClick={() => setOpen(false)}>
+  //                 Cancelar
+  //               </Button>
+  //             </div>
+  //           </div>
+  //         </Modal.Body>
+  //       </Modal>
+  //     </>
+  //   );
+  // };
+ 
+  interface DeleteProductModalProps {
+    product: Product;
+  }
+  
+  const DeleteProductModal: FC<DeleteProductModalProps> = ({ product }) => {
+    const [isOpen, setOpen] = useState(false);
+    const dispatch = useAppDispatch();
+  
+    const handleDelete = async () => {
+      if (product._id) {
+        await dispatch(updateProductStatusAction({ ...product, status_Active: false }));
+        setOpen(false); // Cerrar el modal después de la acción
+        window.location.reload()
+      }
+    };
+  
+    return (
+      <>
+        {/* Botón que abre el modal */}
+        <Button color="failure" onClick={() => setOpen(!isOpen)}>
+          <HiTrash className="mr-2 text-lg" />
+        </Button>
+  
+        {/* Modal de confirmación */}
+        <Modal onClose={() => setOpen(false)} show={isOpen} size="md">
+          <Modal.Header className="px-3 pt-3 pb-0">
+            <span className="sr-only">Eliminar producto</span>
+          </Modal.Header>
+          <Modal.Body className="px-6 pb-6 pt-0">
+            <div className="flex flex-col items-center gap-y-6 text-center">
+              <HiOutlineExclamationCircle className="text-7xl text-red-600" />
+              <p className="text-lg text-gray-500 dark:text-gray-300">
+                ¿Seguro que quieres dar de baja el producto?
+              </p>
+              <div className="flex items-center gap-x-3">
+                <Button color="failure" onClick={handleDelete}>
+                  Aceptar
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                  Cancelar
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  };
+  
+
+  
+
+  /*const EditProductModal: FC = function () {
     const [isOpen, setOpen] = useState(false);
   
     return (
@@ -308,43 +420,149 @@ import {
         </Modal>
       </>
     );
-  };
+  };*/
+
+
+  interface EditProductModalProps {
+    product: Product | null;
+    isOpen: boolean;
+    setOpen: (open: boolean) => void;
+  }
   
-  const DeleteProductModal: FC = function () {
-    const [isOpen, setOpen] = useState(false);
+  const EditProductModal: FC<EditProductModalProps> = ({ product, isOpen, setOpen }) => {
+    const [productData, setProductData] = useState<Partial<Product>>(product || {});
+    const dispatch = useAppDispatch();
   
+    useEffect(() => {
+      if (product) {
+        setProductData(product); // Rellenar los datos cuando se seleccione un producto
+      }
+    }, [product]);
+  
+    const handleSizeChange = (size: number) => {
+      const currentSizes = productData.sizes || [];
+      if (currentSizes.includes(size)) {
+        setProductData({ ...productData, sizes: currentSizes.filter((s) => s !== size) });
+      } else {
+        setProductData({ ...productData, sizes: [...currentSizes, size] });
+      }
+    };
+  
+    // const handleUpdateProduct = () => {
+    //   if (productData._id) {
+    //     dispatch(updateProductAction(productData)); // Actualizar el producto en la base de datos
+    //     setOpen(false);
+       
+    //     //pa actualizar        window.location.reload()
+    //   }
+    // };
+
+    const handleUpdateProduct = async () => {
+      if (productData._id) {
+        await dispatch(updateProductAction(productData)); // Actualizar el producto en la base de datos
+        await dispatch(productListAction()); // Refrescar la lista de productos
+        setOpen(false);
+      }
+    };
+    
+
     return (
-      <>
-        <Button color="failure" onClick={() => setOpen(!isOpen)}>
-          <HiTrash className="mr-2 text-lg" />
-          Eliminar Producto
-        </Button>
-        <Modal onClose={() => setOpen(false)} show={isOpen} size="md">
-          <Modal.Header className="px-3 pt-3 pb-0">
-            <span className="sr-only">Delete product</span>
-          </Modal.Header>
-          <Modal.Body className="px-6 pb-6 pt-0">
-            <div className="flex flex-col items-center gap-y-6 text-center">
-              <HiOutlineExclamationCircle className="text-7xl text-red-600" />
-              <p className="text-lg text-gray-500 dark:text-gray-300">
-                ¿Seguro que quieres dar de baja el producto?
-              </p>
-              <div className="flex items-center gap-x-3">
-                <Button color="failure" onClick={() => setOpen(false)}>
-                  Aceptar
-                </Button>
-                <Button color="gray" onClick={() => setOpen(false)}>
-                  Cancelar
-                </Button>
+      <Modal onClose={() => setOpen(false)} show={isOpen}>
+        <Modal.Header>
+          <strong>Editar producto</strong>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <div>
+                <Label>Nombre</Label>
+                <TextInput
+                  value={productData.name || ""}
+                  onChange={(e) => setProductData({ ...productData, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Imagen</Label>
+                <TextInput
+                  value={productData.image || ""}
+                  onChange={(e) => setProductData({ ...productData, image: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Marca</Label>
+                <Select
+                  value={productData.brand || ""}
+                  onChange={(e) => setProductData({ ...productData, brand: e.target.value })}
+                >
+                  <option value="">Seleccionar marca</option>
+                  {enumBrand.map((brand) => (
+                    <option key={brand} value={brand}>
+                      {brand}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+              <div>
+                <Label>Precio</Label>
+                <TextInput
+                  type="number"
+                  value={productData.price || ""}
+                  onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
+                />
+              </div>
+              <div>
+                <Label>Tallas</Label>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  {enumSizes.map((size) => (
+                    <div key={size} className="flex items-center">
+                      <Checkbox
+                        checked={productData.sizes?.includes(size)}
+                        onChange={() => handleSizeChange(size)}
+                      />
+                      <Label className="ml-2">{size}</Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Label>Cantidad</Label>
+                <TextInput
+                  type="number"
+                  value={productData.countInStock || ""}
+                  onChange={(e) => setProductData({ ...productData, countInStock: parseFloat(e.target.value) })}
+                />
+              </div>
+              <div className="lg:col-span-2">
+                <Label>Descripción</Label>
+                <Textarea
+                  rows={3}
+                  value={productData.description || ""}
+                  onChange={(e) => setProductData({ ...productData, description: e.target.value })}
+                />
               </div>
             </div>
-          </Modal.Body>
-        </Modal>
-      </>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="primary" onClick={handleUpdateProduct}>
+            Guardar cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
   };
+    
   
   const ProductsTable = ({ products }: { products: Product[] }) => {
+    
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isEditOpen, setEditOpen] = useState(false);
+  
+    const handleEditClick = (product: Product) => {
+      setSelectedProduct(product);
+      setEditOpen(true);
+    };  
+    
     return (
       <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
         <Table.Head className="bg-gray-100 dark:bg-gray-700">
@@ -355,6 +573,7 @@ import {
           <Table.HeadCell>Marca</Table.HeadCell>
           <Table.HeadCell>Precio</Table.HeadCell>
           <Table.HeadCell>Stock</Table.HeadCell>
+          <Table.HeadCell>Status</Table.HeadCell>
           <Table.HeadCell>Acciones</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
@@ -389,22 +608,51 @@ import {
             <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
                 {product.price}
             </Table.Cell>
+            
             <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
                 {product.countInStock}
             </Table.Cell>
+
+            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+            {product.status_Active ? (
+                <div>
+                  <p>Activo</p>
+                </div>
+              ) : (
+                <div>
+                  <p>Inactivo</p>
+                </div>
+              )}
+            </Table.Cell>
+
+
             <Table.Cell className="space-x-2 whitespace-nowrap p-4">
-              <div className="flex items-center gap-x-3">
-                <EditProductModal />
-                <DeleteProductModal />
-              </div>
+            
+                <Button color="primary" onClick={() => handleEditClick(product)}>
+                  <FaEdit className="text-sm" />
+                </Button>
+
+                {/* este es el buton de delete */}
+                <DeleteProductModal product={product}/> 
+            
             </Table.Cell>
           </Table.Row>
         ))}
           
+
+          <div className="flex items-center gap-x-3">
+                <EditProductModal product={selectedProduct}
+                      isOpen={isEditOpen}
+                      setOpen={setEditOpen}
+              />
+              </div>
+
+
         </Table.Body>
       </Table>
+      
     );
   };
   
-  export default EcommerceProductsPageDos;
+  export default EcommerceProductsPage;
  
