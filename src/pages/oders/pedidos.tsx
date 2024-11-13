@@ -64,35 +64,40 @@ const OrdersTable: FC = function () {
   return (
     <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
       <Table.Head className="bg-gray-100 dark:bg-gray-700">
-        <Table.HeadCell>ID de User</Table.HeadCell>
-        <Table.HeadCell>Imagen</Table.HeadCell>
-        <Table.HeadCell>Nombre</Table.HeadCell>
-        <Table.HeadCell>Marca</Table.HeadCell>
-        <Table.HeadCell>Precio</Table.HeadCell>
-        <Table.HeadCell>Stock</Table.HeadCell>
-        <Table.HeadCell>Acciones</Table.HeadCell>
+        <Table.HeadCell>ID de Pedido</Table.HeadCell>
+        <Table.HeadCell>User</Table.HeadCell>
+        <Table.HeadCell>Información de pedido</Table.HeadCell>
+        <Table.HeadCell>Dirección</Table.HeadCell>
+        <Table.HeadCell>Precio Total</Table.HeadCell>
+        <Table.HeadCell>Fecha</Table.HeadCell>
+        <Table.HeadCell>Estatus</Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
         <Table.Row className="hover:bg-gray-100 dark:hover:bg-gray-700">
           <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
             #194556
-          </Table.Cell>
-           <Table.Cell className="w-4 p-4">
-              owo
-          </Table.Cell> 
+          </Table.Cell>  
           <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
             <div className="text-base font-semibold text-gray-900 dark:text-white">
-              Education Dashboard
+              #12134
+            </div> 
+          </Table.Cell>
+          <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+            <div className="text-base font-semibold text-gray-900 dark:text-white">
+              tenis chidos
             </div> 
           </Table.Cell>
           <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-            Angular
+            Calle x colonia 1
           </Table.Cell>
           <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
             $149
+          </Table.Cell> 
+          <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+            Nov 14 20
           </Table.Cell>
           <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-            20
+            Pagado
           </Table.Cell>
            
         </Table.Row>
