@@ -35,7 +35,9 @@ import {
     updateProductAction,
     updateProductStatusAction,
   } from "../../Redux/Actions/Product";
+
   import { Product } from "../../Redux/types";
+  
   import { useDispatch, useSelector } from "react-redux";
   
    
@@ -83,8 +85,7 @@ import {
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow">
-                <ProductsTable products={products}/>
-                
+                <ProductsTable products={products}/>          
               </div>
             </div>
           </div>
@@ -564,93 +565,173 @@ import {
     };  
     
     return (
-      <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-        <Table.Head className="bg-gray-100 dark:bg-gray-700">
-          <Table.HeadCell>ID</Table.HeadCell>
-          <Table.HeadCell>Imagen</Table.HeadCell>
-          <Table.HeadCell>Nombre</Table.HeadCell>
-          <Table.HeadCell>Descripcion</Table.HeadCell>
-          <Table.HeadCell>Marca</Table.HeadCell>
-          <Table.HeadCell>Precio</Table.HeadCell>
-          <Table.HeadCell>Stock</Table.HeadCell>
-          <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell>Acciones</Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+      // <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+      //   <Table.Head className="bg-gray-100 dark:bg-gray-700">
+      //     <Table.HeadCell>ID</Table.HeadCell>
+      //     <Table.HeadCell>Imagen</Table.HeadCell>
+      //     <Table.HeadCell>Nombre</Table.HeadCell>
+      //     <Table.HeadCell>Descripcion</Table.HeadCell>
+      //     <Table.HeadCell>Marca</Table.HeadCell>
+      //     <Table.HeadCell>Precio</Table.HeadCell>
+      //     <Table.HeadCell>Stock</Table.HeadCell>
+      //     <Table.HeadCell>Status</Table.HeadCell>
+      //     <Table.HeadCell>Acciones</Table.HeadCell>
+      //   </Table.Head>
+      //   <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
         
-        {products.map((product: Product) => (
-          <Table.Row key={product._id}   className="hover:bg-gray-100 dark:hover:bg-gray-700">
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-                {product._id}
-            </Table.Cell>
-             <Table.Cell className="w-4 p-4">
-             <img 
-                src={product.image} 
-                alt={product.name} 
-                className="h-16 w-16 object-cover rounded"
-              />
+      //   {products.map((product: Product) => (
+      //     <Table.Row key={product._id}   className="hover:bg-gray-100 dark:hover:bg-gray-700">
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //           {product._id}
+      //       </Table.Cell>
+      //        <Table.Cell className="w-4 p-4">
+      //        <img 
+      //           src={product.image} 
+      //           alt={product.name} 
+      //           className="h-16 w-16 object-cover rounded"
+      //         />
              
-            </Table.Cell> 
-            <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-              <div className="text-base font-semibold text-gray-900 dark:text-white">
-              {product.name}
-              </div> 
-            </Table.Cell>
+      //       </Table.Cell> 
+      //       <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+      //         <div className="text-base font-semibold text-gray-900 dark:text-white">
+      //         {product.name}
+      //         </div> 
+      //       </Table.Cell>
 
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-                {product.description}
-            </Table.Cell>
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //           {product.description}
+      //       </Table.Cell>
 
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-                {product.brand}
-            </Table.Cell>
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //           {product.brand}
+      //       </Table.Cell>
             
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-                {product.price}
-            </Table.Cell>
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //           {product.price}
+      //       </Table.Cell>
             
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-                {product.countInStock}
-            </Table.Cell>
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //           {product.countInStock}
+      //       </Table.Cell>
 
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-            {product.status_Active ? (
-                <div>
-                  <p>Activo</p>
-                </div>
-              ) : (
-                <div>
-                  <p>Inactivo</p>
-                </div>
-              )}
-            </Table.Cell>
+      //       <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
+      //       {product.status_Active ? (
+      //           <div>
+      //             <p>Activo</p>
+      //           </div>
+      //         ) : (
+      //           <div>
+      //             <p>Inactivo</p>
+      //           </div>
+      //         )}
+      //       </Table.Cell>
 
 
-            <Table.Cell className="space-x-2 whitespace-nowrap p-4">
+      //       <Table.Cell className="space-x-2 whitespace-nowrap p-4">
             
-                <Button color="primary" onClick={() => handleEditClick(product)}>
-                  <FaEdit className="text-sm" />
-                </Button>
+      //           <Button color="primary" onClick={() => handleEditClick(product)}>
+      //             <FaEdit className="text-sm" />
+      //           </Button>
 
-                {/* este es el buton de delete */}
-                <DeleteProductModal product={product}/> 
+      //           {/* este es el buton de delete */}
+      //           <DeleteProductModal product={product}/> 
             
-            </Table.Cell>
-          </Table.Row>
-        ))}
+      //       </Table.Cell>
+      //     </Table.Row>
+      //   ))}
           
 
-          <div className="flex items-center gap-x-3">
-                <EditProductModal product={selectedProduct}
-                      isOpen={isEditOpen}
-                      setOpen={setEditOpen}
-              />
-              </div>
+      //     <div className="flex items-center gap-x-3">
+      //           <EditProductModal product={selectedProduct}
+      //                 isOpen={isEditOpen}
+      //                 setOpen={setEditOpen}
+      //         />
+      //         </div>
 
 
-        </Table.Body>
+      //   </Table.Body>
+      // </Table>
+      <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+  <Table.Head className="bg-gray-100 dark:bg-gray-700">
+    <Table.HeadCell>ID</Table.HeadCell>
+    <Table.HeadCell>Imagen</Table.HeadCell>
+    <Table.HeadCell>Nombre</Table.HeadCell>
+    <Table.HeadCell>Descripcion</Table.HeadCell>
+    <Table.HeadCell>Marca</Table.HeadCell>
+    <Table.HeadCell>Precio</Table.HeadCell>
+    <Table.HeadCell>Stock</Table.HeadCell>
+    <Table.HeadCell>Status</Table.HeadCell>
+    <Table.HeadCell>Acciones</Table.HeadCell>
+  </Table.Head>
+  <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+    {products.map((product: Product) => (
+      <Table.Row key={product._id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
+
+        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+          {product._id}
+        </Table.Cell>
+
+        <Table.Cell className="w-4 p-4">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-16 w-16 object-cover rounded"
+          />
+        </Table.Cell>
+{/* className="whitespace-normal break-words p-4 text-sm font-normal text-gray-500 dark:text-gray-400" */}
+        <Table.Cell >
+          <div className={product.status_Active  ? "text-base font-semibold text-gray-900 dark:text-white": "text-gray-500 line-through"}  >
+            {product.name}
+          </div>
+        </Table.Cell>
+
+        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+          {product.description}
+        </Table.Cell>
+
+        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+          {product.brand}
+        </Table.Cell>
+
+        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+          {product.price}
+        </Table.Cell>
+
+        <Table.Cell className={product.status_Active ?  "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white"   : "text-gray-500 line-through"  }>
+          {product.countInStock}
+        </Table.Cell>
+
+        <Table.Cell className="whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white">
+          {product.status_Active ? (
+            <div>
+              <p>Activo</p>
+            </div>
+          ) : (
+            <div className="text-gray-500 line-through">
+              <p>Inactivo</p>
+            </div>
+          )}
+        </Table.Cell>
+
+        <Table.Cell className="whitespace-normal break-words p-4">
+          {/* Alineación horizontal de los botones */}
+          <div className="flex items-center space-x-2">
+            <Button color="primary" onClick={() => handleEditClick(product)}>
+              <FaEdit className="text-sm" />
+            </Button>
+            <DeleteProductModal product={product} />
+          </div>
+        </Table.Cell>
+      </Table.Row>
+    ))}
+
+    {/* Modal de edición */}
+    <div className="flex items-center gap-x-3">
+      <EditProductModal product={selectedProduct} isOpen={isEditOpen} setOpen={setEditOpen} />
+    </div>
+  </Table.Body>
       </Table>
-      
+
     );
   };
   
