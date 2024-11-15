@@ -16,10 +16,7 @@ const ExampleNavbar: FC = function () {
           </div>
           <div className="flex items-center gap-3">
             
-            <Button color="primary" href="/">
-              toglge de logout y nombre deuser 
-            </Button>
-            
+        
             
             <DarkThemeToggle />
           </div>

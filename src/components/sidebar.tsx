@@ -18,16 +18,31 @@ import { MdOutlineLocalShipping} from "react-icons/md";
 import { TbBuildingFactory2 } from "react-icons/tb";
 import { MdHome } from "react-icons/md";
 
-
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../Redux/Actions/User"
 const ExampleSidebar: FC = function () {
+  // const [currentPage, setCurrentPage] = useState("");
+
+  // useEffect(() => {
+  //   const newPage = window.location.pathname;
+
+  //   setCurrentPage(newPage);
+  // }, [setCurrentPage]);
+
   const [currentPage, setCurrentPage] = useState("");
+  const dispatch = useDispatch();  // Usamos el hook para acceder a dispatch
 
   useEffect(() => {
     const newPage = window.location.pathname;
-
     setCurrentPage(newPage);
   }, [setCurrentPage]);
 
+  // Función que maneja el logout
+  const handleLogout = () => {
+    dispatch(logoutAction());  // Llama a la acción de logout
+  };
+
+  
   return (
     <Sidebar aria-label="Sidebar with multi-level dropdown example">
       <div className="flex h-full flex-col justify-between py-2">
@@ -85,8 +100,8 @@ const ExampleSidebar: FC = function () {
               </Sidebar.Item> */}
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
-              <Sidebar.Item
-                href="/"
+          <Sidebar.Item
+                onClick={handleLogout}  // Agrega el manejador de logout aquí
                 icon={CiLogout}
               >
                 Cerrar Sesión

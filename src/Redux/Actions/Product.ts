@@ -13,7 +13,7 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 };
 
  export const addProductAction = (product: any) => async (dispatch: Dispatch) => {
-  const response = await api.post("api/admin/product", product);
+  const response = await api.post("/api/admin/product", product);
   dispatch({ type: ADD_PRODUCT, payload: response.data });
 };
 
