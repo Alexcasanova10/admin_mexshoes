@@ -174,7 +174,7 @@ const OrdersTable= ({ orders }: { orders: Order[] }) => {
           {order.createdAt}
         </Table.Cell>
         <Table.Cell className="whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white">
-          {order.isPaid ? (
+          {order.isPaid===true ? (
             <div className="me-2 mt-1.5 inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
               <p>Pagado</p>
             </div>

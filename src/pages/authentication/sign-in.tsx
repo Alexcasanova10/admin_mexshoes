@@ -54,6 +54,17 @@ const SignInPage = () => {
               placeholder="Contraseña"
             />
           </div>
+          
+          <div className="mb-6">
+  <a
+    href="/sign-up"
+    className="text-sm text-gray-600 hover:text-blue-600 hover:underline"
+  >¿No estas registrado?    Crear cuenta
+  </a>
+</div>
+
+          
+
           <Button type="submit" className="w-full">Iniciar sesión</Button>
         </form>
       </Card>
