@@ -1,8 +1,14 @@
+type Size = {
+  size: number;
+  quantity: number;
+};
+
 export type Product = {
     _id: string; 
     name: string;
     image: string;
-    sizes: number[];
+    // sizes: number[]; anterior
+    sizes: Size[];
     brand: string;
     description: string;
     price: number;

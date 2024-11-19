@@ -95,148 +95,151 @@ import {
   };
   
   
-  const AddProductModal=  ()=> {
-    const [isOpen, setOpen] = useState(false);
-    const [productData, setProductData] = useState<Partial<Product>>({
-      name: "",
-      image:"",
-      price: 0,
-      brand: "",
-      sizes:[],
-      countInStock:0,
-      description:""     
-    });
+  // const AddProductModal=  ()=> {
+  //   const [isOpen, setOpen] = useState(false);
+  //   const [productData, setProductData] = useState<Partial<Product>>({
+  //     name: "",
+  //     image:"",
+  //     price: 0,
+  //     brand: "",
+  //     sizes:[],
+  //     countInStock:0,
+  //     description:""     
+  //   });
 
-    const dispatch = useAppDispatch();
 
-    const handleSizeChange = (size: number) => {
-      const currentSizes = productData.sizes || [];
-      if (currentSizes.includes(size)) {
-        setProductData({ ...productData, sizes: currentSizes.filter(s => s !== size) });
-      } else {
-        setProductData({ ...productData, sizes: [...currentSizes, size] });
-      }
-    }; 
+
+  //   const dispatch = useAppDispatch();
+
+
+  //   //codigo anteriiooor, no abrir 
+  //   // const handleSizeChange = (size: number) => {
+  //   //   const currentSizes = productData.sizes || [];
+  //   //   if (currentSizes.includes(size)) {
+  //   //     setProductData({ ...productData, sizes: currentSizes.filter(s => s !== size) });
+  //   //   } else {
+  //   //     setProductData({ ...productData, sizes: [...currentSizes, size] });
+  //   //   }
+  //   // }; 
     
-    const handleAddProduct = () => {
-      dispatch(addProductAction(productData));
-      setOpen(false);
-    };
+  //   const handleAddProduct = () => {
+  //     dispatch(addProductAction(productData));
+  //     setOpen(false);
+  //   };
     
-    return (
-      <>
-        <Button color="primary" onClick={() => setOpen(!isOpen)}>
-          <FaPlus className="mr-3 text-sm" />
-          Añadir Producto
-        </Button>
-        <Modal onClose={() => setOpen(false)} show={isOpen}>
-          <Modal.Header className="border-b border-gray-200 dark:border-gray-700">
-            <strong>Agregar producto</strong>
-          </Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <div>
-                  <Label htmlFor="productName">Nombre </Label>
-                  <TextInput
-                   placeholder="Nombre"
-                   value={productData.name || ""}
-                   onChange={(e) => setProductData({ ...productData, name: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="productName">Imagen </Label>
-                  <TextInput
-                    placeholder="URL de Imagen"
-                    value={productData.image || ""}
-                    onChange={(e) => setProductData({ ...productData, image: e.target.value })}
-                  />
-                </div>
+  //   return (
+  //     <>
+  //       <Button color="primary" onClick={() => setOpen(!isOpen)}>
+  //         <FaPlus className="mr-3 text-sm" />
+  //         Añadir Producto
+  //       </Button>
+  //       <Modal onClose={() => setOpen(false)} show={isOpen}>
+  //         <Modal.Header className="border-b border-gray-200 dark:border-gray-700">
+  //           <strong>Agregar producto</strong>
+  //         </Modal.Header>
+  //         <Modal.Body>
+  //           <form>
+  //             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+  //               <div>
+  //                 <Label htmlFor="productName">Nombre </Label>
+  //                 <TextInput
+  //                  placeholder="Nombre"
+  //                  value={productData.name || ""}
+  //                  onChange={(e) => setProductData({ ...productData, name: e.target.value })}
+  //                 />
+  //               </div>
+  //               <div>
+  //                 <Label htmlFor="productName">Imagen </Label>
+  //                 <TextInput
+  //                   placeholder="URL de Imagen"
+  //                   value={productData.image || ""}
+  //                   onChange={(e) => setProductData({ ...productData, image: e.target.value })}
+  //                 />
+  //               </div>
                  
-                <div>
-                  <Label htmlFor="brand">Marca</Label>
-                  <Select value={productData.brand}
-                      onChange={(e) => setProductData({ ...productData, brand: e.target.value })}>
-                    <option value="">Seleccionar marca</option>
-                    {enumBrand.map((brand) => (
-                      <option key={brand} value={brand}>
-                        {brand}
-                      </option>
-                    ))}
-                  </Select>                  
-                </div>
-                <div>
-                  <Label htmlFor="price">Precio</Label>
-                  <TextInput
-                    placeholder="1800"
-                    type="number"
-                    value={productData.price || ""}
-                    onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
-                  />
-                </div>
+  //               <div>
+  //                 <Label htmlFor="brand">Marca</Label>
+  //                 <Select value={productData.brand}
+  //                     onChange={(e) => setProductData({ ...productData, brand: e.target.value })}>
+  //                   <option value="">Seleccionar marca</option>
+  //                   {enumBrand.map((brand) => (
+  //                     <option key={brand} value={brand}>
+  //                       {brand}
+  //                     </option>
+  //                   ))}
+  //                 </Select>                  
+  //               </div>
+  //               <div>
+  //                 <Label htmlFor="price">Precio</Label>
+  //                 <TextInput
+  //                   placeholder="1800"
+  //                   type="number"
+  //                   value={productData.price || ""}
+  //                   onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
+  //                 />
+  //               </div>
                  
 
-                <div>
-                  <Label htmlFor="sizes">Tallas</Label>
-                  <div className="grid grid-cols-3 gap-2 mt-2">
-                    {enumSizes.map((size) => (
-                      <div key={size} className="flex items-center">
-                        <Checkbox
-                          id={`size-${size}`}
-                          checked={productData.sizes?.includes(size)}
-                          onChange={() => handleSizeChange(size)}
-                        />
-                        <Label htmlFor={`size-${size}`} className="ml-2">
-                          {size}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+  //               <div>
+  //                 <Label htmlFor="sizes">Tallas</Label>
+  //                 <div className="grid grid-cols-3 gap-2 mt-2">
 
-                <div>
-                  <Label htmlFor="price">Cantidad</Label>
-                  <TextInput
-                    id="countInStock"
-                    name="countInStock"
-                    type="number"
-                    value={productData.countInStock || ""}
-                    onChange={(e)=> setProductData({...productData, countInStock: parseFloat(e.target.value)})}
-                    placeholder="Ejemplo: 10 unidades "
-                    className="mt-1"
-                  />
-                </div>
-                {/* <div className="lg:col-span-2"> */}
-                <div className="lg:col-span-2">
-                  <Label htmlFor="producTable.Celletails">Detalles de productos</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    placeholder="Ejemplo: Calzado cómodo y con un gran estilo"
-                    rows={3}
-                    value={productData.description || ""}
-                    onChange={(e)=> setProductData({...productData, description: e.target.value})}
-                    className="mt-1"
-                  />
-                </div>
+  //                   {/* aqui quiero que pongas las  logica para que en un label aparezca cada sze y en un input number la quanitty de cada size */}
+  //                   {/* {enumSizes.map((size) => (
+  //                     <div key={size} className="flex items-center">
+  //                       <Checkbox
+  //                         id={`size-${size}`}
+  //                         checked={productData.sizes?.includes(size)}
+  //                         onChange={() => handleSizeChange(size)}
+  //                       />amteriroooor
+  //                       <Label htmlFor={`size-${size}`} className="ml-2">
+  //                         {size}
+  //                       </Label>
+  //                     </div>
+  //                   ))} */}
+  //                 </div>
+  //               </div>
+
+  //               <div>
+  //                 <Label htmlFor="price">Cantidad</Label>
+  //                 <TextInput
+  //                   id="countInStock"
+  //                   name="countInStock"
+  //                   type="number"
+  //                   value={productData.countInStock || ""}
+  //                   onChange={(e)=> setProductData({...productData, countInStock: parseFloat(e.target.value)})}
+  //                   placeholder="Ejemplo: 10 unidades "
+  //                   className="mt-1"
+  //                 />
+  //               </div>
+  //               {/* <div className="lg:col-span-2"> */}
+  //               <div className="lg:col-span-2">
+  //                 <Label htmlFor="producTable.Celletails">Detalles de productos</Label>
+  //                 <Textarea
+  //                   id="description"
+  //                   name="description"
+  //                   placeholder="Ejemplo: Calzado cómodo y con un gran estilo"
+  //                   rows={3}
+  //                   value={productData.description || ""}
+  //                   onChange={(e)=> setProductData({...productData, description: e.target.value})}
+  //                   className="mt-1"
+  //                 />
+  //               </div>
               
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            {/* <Button color="primary" onClick={(handleAddProduct) => setOpen(false)}> */}
-            <Button color="primary" onClick={handleAddProduct}>
-              Añadir Producto
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  };
+  //             </div>
+  //           </form>
+  //         </Modal.Body>
+  //         <Modal.Footer>
+  //           {/* <Button color="primary" onClick={(handleAddProduct) => setOpen(false)}> */}
+  //           <Button color="primary" onClick={handleAddProduct}>
+  //             Añadir Producto
+  //           </Button>
+  //         </Modal.Footer>
+  //       </Modal>
+  //     </>
+  //   );
+  // };
   
-
-
- 
   // const DeleteProductModal: FC = function () {
   //   const [isOpen, setOpen] = useState(false);
   
@@ -270,6 +273,174 @@ import {
   //   );
   // };
  
+  const AddProductModal = () => {
+    const [isOpen, setOpen] = useState(false);
+    const [productData, setProductData] = useState<Partial<Product>>({
+      name: "",
+      image: "",
+      price: 0,
+      brand: "",
+      sizes: [],
+      countInStock: 0,
+      description: "",
+    });
+  
+    const dispatch = useAppDispatch();
+  
+    // Manejar el cambio de tamaño y cantidad
+    const handleSizeChange = (size: number, quantity: number) => {
+      const updatedSizes = [...(productData.sizes || [])];
+      const existingSizeIndex = updatedSizes.findIndex((item) => item.size === size);
+  
+      if (existingSizeIndex !== -1) {
+        updatedSizes[existingSizeIndex].quantity = quantity;
+      } else {
+        updatedSizes.push({ size, quantity });
+      }
+  
+      const totalQuantity = updatedSizes.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  
+      setProductData({ ...productData, sizes: updatedSizes, countInStock: totalQuantity });
+    };
+  
+    // Agregar producto
+    const handleAddProduct = () => {
+      dispatch(addProductAction(productData));
+      setOpen(false);
+    };
+  
+    return (
+      <>
+        <Button color="primary" onClick={() => setOpen(!isOpen)}>
+          <FaPlus className="mr-3 text-sm" />
+          Añadir Producto
+        </Button>
+        <Modal
+          onClose={() => setOpen(false)}
+          show={isOpen}
+          className="overflow-auto" // Ajustar altura máxima y permitir desplazamiento
+        >
+          <Modal.Header className="border-b border-gray-200 dark:border-gray-700">
+            <strong>Agregar producto</strong>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                {/* Campos existentes */}
+                <div>
+                  <Label htmlFor="productName">Nombre</Label>
+                  <TextInput
+                    placeholder="Nombre"
+                    value={productData.name || ""}
+                    onChange={(e) =>
+                      setProductData({ ...productData, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="productImage">Imagen</Label>
+                  <TextInput
+                    placeholder="URL de Imagen"
+                    value={productData.image || ""}
+                    onChange={(e) =>
+                      setProductData({ ...productData, image: e.target.value })
+                    }
+                  />
+                </div>
+                {/* Tallas y cantidades */}
+                <div className="lg:col-span-2">
+                  <Label htmlFor="sizes">Tallas y Cantidades</Label>
+                  <div className="grid grid-cols-3 gap-4 mt-2">
+                    {enumSizes.map((size) => (
+                      <div key={size} className="flex flex-col items-start">
+                        <Label>{size}</Label>
+                        <TextInput
+                          type="number"
+                          placeholder="Cantidad"
+                          min={0}
+                          onChange={(e) =>
+                            handleSizeChange(size, parseInt(e.target.value) || 0)
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+  
+                <div>
+                  <Label htmlFor="brand">Marca</Label>
+                  <Select
+                    value={productData.brand}
+                    onChange={(e) =>
+                      setProductData({ ...productData, brand: e.target.value })
+                    }
+                  >
+                    <option value="">Seleccionar marca</option>
+                    {enumBrand.map((brand) => (
+                      <option key={brand} value={brand}>
+                        {brand}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+  
+                {/* Otros campos */}
+                <div>
+                  <Label htmlFor="price">Precio</Label>
+                  <TextInput
+                    placeholder="1800"
+                    type="number"
+                    value={productData.price || ""}
+                    onChange={(e) =>
+                      setProductData({
+                        ...productData,
+                        price: parseFloat(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+  
+                <div>
+                  <Label htmlFor="description">Descripción</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Detalles del producto"
+                    value={productData.description || ""}
+                    onChange={(e) =>
+                      setProductData({
+                        ...productData,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+  
+                {/* Cantidad total automática */}
+                <div>
+                  <Label htmlFor="cantidad">Cantidad Total</Label>
+                  <TextInput
+                    id="countInStock"
+                    name="countInStock"
+                    type="number"
+                    value={productData.countInStock || ""}
+                    placeholder="Ejemplo: 10 unidades"
+                    disabled
+                  />
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="primary" onClick={handleAddProduct}>
+              Añadir Producto
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+  
+  
   interface DeleteProductModalProps {
     product: Product;
   }
@@ -319,9 +490,6 @@ import {
     );
   };
   
-
-  
-
   /*const EditProductModal: FC = function () {
     const [isOpen, setOpen] = useState(false);
   
@@ -430,6 +598,133 @@ import {
     setOpen: (open: boolean) => void;
   }
   
+  // anterior editproductmodal antiguo
+  // const EditProductModal: FC<EditProductModalProps> = ({ product, isOpen, setOpen }) => {
+  //   const [productData, setProductData] = useState<Partial<Product>>(product || {});
+  //   const dispatch = useAppDispatch();
+  
+  //   useEffect(() => {
+  //     if (product) {
+  //       setProductData(product); // Rellenar los datos cuando se seleccione un producto
+  //     }
+  //   }, [product]);
+  
+  //   //anterior
+  //   // const handleSizeChange = (size: number) => {
+  //   //   const currentSizes = productData.sizes || [];
+  //   //   if (currentSizes.includes(size)) {
+  //   //     setProductData({ ...productData, sizes: currentSizes.filter((s) => s !== size) });
+  //   //   } else {
+  //   //     setProductData({ ...productData, sizes: [...currentSizes, size] });
+  //   //   }
+  //   // };
+  
+  //   // const handleUpdateProduct = () => {
+  //   //   if (productData._id) {
+  //   //     dispatch(updateProductAction(productData)); // Actualizar el producto en la base de datos
+  //   //     setOpen(false);
+       
+  //   //     //pa actualizar        window.location.reload()
+  //   //   }
+  //   // };
+
+  //   const handleUpdateProduct = async () => {
+  //     if (productData._id) {
+  //       await dispatch(updateProductAction(productData)); // Actualizar el producto en la base de datos
+  //       await dispatch(productListAction()); // Refrescar la lista de productos
+  //       setOpen(false);
+  //     }
+  //   };
+    
+
+  //   return (
+  //     <Modal onClose={() => setOpen(false)} show={isOpen}>
+  //       <Modal.Header>
+  //         <strong>Editar producto</strong>
+  //       </Modal.Header>
+  //       <Modal.Body>
+  //         <form>
+  //           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+  //             <div>
+  //               <Label>Nombre</Label>
+  //               <TextInput
+  //                 value={productData.name || ""}
+  //                 onChange={(e) => setProductData({ ...productData, name: e.target.value })}
+  //               />
+  //             </div>
+  //             <div>
+  //               <Label>Imagen</Label>
+  //               <TextInput
+  //                 value={productData.image || ""}
+  //                 onChange={(e) => setProductData({ ...productData, image: e.target.value })}
+  //               />
+  //             </div>
+
+  //             <div>
+  //               <Label>Marca</Label>
+  //               <Select
+  //                 value={productData.brand || ""}
+  //                 onChange={(e) => setProductData({ ...productData, brand: e.target.value })}
+  //               >
+  //                 <option value="">Seleccionar marca</option>
+  //                 {enumBrand.map((brand) => (
+  //                   <option key={brand} value={brand}>
+  //                     {brand}
+  //                   </option>
+  //                 ))}
+  //               </Select>
+  //             </div>
+
+  //             <div>
+  //               <Label>Precio</Label>
+  //               <TextInput
+  //                 type="number"
+  //                 value={productData.price || ""}
+  //                 onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
+  //               />
+  //             </div>
+  //             <div>
+  //               <Label>Tallas</Label>
+  //               <div className="grid grid-cols-3 gap-2 mt-2">
+  //                 {enumSizes.map((size) => (
+  //                   <div key={size} className="flex items-center">
+  //                     <Checkbox
+  //                       // checked={productData.sizes?.includes(size)}
+  //                       // onChange={() => handleSizeChange(size)}
+  //                     />
+  //                     <Label className="ml-2">{size}</Label>
+  //                   </div>
+  //                 ))}
+  //               </div>
+  //             </div>
+  //             <div>
+  //               <Label>Cantidad</Label>
+  //               <TextInput
+  //                 type="number"
+  //                 value={productData.countInStock || ""}
+  //                 onChange={(e) => setProductData({ ...productData, countInStock: parseFloat(e.target.value) })}
+  //               />
+  //             </div>
+  //             <div className="lg:col-span-2">
+  //               <Label>Descripción</Label>
+  //               <Textarea
+  //                 rows={3}
+  //                 value={productData.description || ""}
+  //                 onChange={(e) => setProductData({ ...productData, description: e.target.value })}
+  //               />
+  //             </div>
+  //           </div>
+  //         </form>
+  //       </Modal.Body>
+  //       <Modal.Footer>
+  //         <Button color="primary" onClick={handleUpdateProduct}>
+  //           Guardar cambios
+  //         </Button>
+  //       </Modal.Footer>
+  //     </Modal>
+  //   );
+  // };
+    
   const EditProductModal: FC<EditProductModalProps> = ({ product, isOpen, setOpen }) => {
     const [productData, setProductData] = useState<Partial<Product>>(product || {});
     const dispatch = useAppDispatch();
@@ -439,24 +734,63 @@ import {
         setProductData(product); // Rellenar los datos cuando se seleccione un producto
       }
     }, [product]);
-  
-    const handleSizeChange = (size: number) => {
-      const currentSizes = productData.sizes || [];
-      if (currentSizes.includes(size)) {
-        setProductData({ ...productData, sizes: currentSizes.filter((s) => s !== size) });
-      } else {
-        setProductData({ ...productData, sizes: [...currentSizes, size] });
+
+
+    useEffect(() => {
+      if (productData.sizes) {
+        const totalQuantity = productData.sizes.reduce((total, item) => total + item.quantity, 0);
+        setProductData((prev) => ({ ...prev, countInStock: totalQuantity }));
       }
-    };
+    }, [productData.sizes]);
+
   
-    // const handleUpdateProduct = () => {
-    //   if (productData._id) {
-    //     dispatch(updateProductAction(productData)); // Actualizar el producto en la base de datos
-    //     setOpen(false);
-       
-    //     //pa actualizar        window.location.reload()
+    // Manejar cambios en las tallas y cantidades
+    // const handleSizeChange = (size: number, quantity: number) => {
+    //   const updatedSizes = [...(productData.sizes || [])];
+    //   const existingSizeIndex = updatedSizes.findIndex((item) => item.size === size);
+  
+    //   if (existingSizeIndex !== -1 && updatedSizes[existingSizeIndex]) {
+    //     if (quantity > 0) {
+    //       // Actualizar cantidad existente
+    //       // const updatedSizes = productData.sizes ? [...productData.sizes] : [];
+
+    //       updatedSizes[existingSizeIndex].quantity = quantity;
+    //     } else {
+    //       // Eliminar talla si cantidad es 0
+    //       updatedSizes.splice(existingSizeIndex, 1);
+    //     }
+    //   } else if (quantity > 0) {
+    //     // Agregar nueva talla
+    //     updatedSizes.push({ size, quantity });
     //   }
+  
+    //   setProductData({ ...productData, sizes: updatedSizes });
     // };
+  
+    const handleSizeChange = (size: number, quantity: number) => {
+      const updatedSizes = [...(productData.sizes || [])];
+      const existingSizeIndex = updatedSizes.findIndex((item) => item.size === size);
+    
+      if (existingSizeIndex !== -1 && updatedSizes[existingSizeIndex]) {
+        if (quantity > 0) {
+          // Actualizar cantidad existente
+          updatedSizes[existingSizeIndex].quantity = quantity;
+        } else {
+          // Eliminar talla si cantidad es 0
+          updatedSizes.splice(existingSizeIndex, 1);
+        }
+      } else if (quantity > 0) {
+        // Agregar nueva talla
+        updatedSizes.push({ size, quantity });
+      }
+    
+      // Calcular la suma total de cantidades
+      const totalQuantity = updatedSizes.reduce((total, item) => total + item.quantity, 0);
+    
+      // Actualizar el estado del producto con las tallas y el conteo total
+      setProductData({ ...productData, sizes: updatedSizes, countInStock: totalQuantity });
+    };
+    
 
     const handleUpdateProduct = async () => {
       if (productData._id) {
@@ -465,8 +799,7 @@ import {
         setOpen(false);
       }
     };
-    
-
+  
     return (
       <Modal onClose={() => setOpen(false)} show={isOpen}>
         <Modal.Header>
@@ -511,29 +844,39 @@ import {
                   onChange={(e) => setProductData({ ...productData, price: parseFloat(e.target.value) })}
                 />
               </div>
-              <div>
-                <Label>Tallas</Label>
-                <div className="grid grid-cols-3 gap-2 mt-2">
-                  {enumSizes.map((size) => (
-                    <div key={size} className="flex items-center">
-                      <Checkbox
-                        checked={productData.sizes?.includes(size)}
-                        onChange={() => handleSizeChange(size)}
-                      />
-                      <Label className="ml-2">{size}</Label>
-                    </div>
-                  ))}
+              <div className="lg:col-span-2">
+                <Label>Tallas y Cantidades</Label>
+                <div className="grid grid-cols-3 gap-4 mt-2">
+                  {enumSizes.map((size) => {
+                    const existingSize = productData.sizes?.find((item) => item.size === size);
+                    return (
+                      <div key={size} className="flex flex-col items-start">
+                        <Label>{size}</Label>
+                        <TextInput
+                          type="number"
+                          placeholder="Cantidad"
+                          min={0}
+                          value={existingSize?.quantity || ""}
+                          onChange={(e) =>
+                            handleSizeChange(size, parseInt(e.target.value) || 0)
+                          }
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div>
-                <Label>Cantidad</Label>
+                <Label>Cantidad Total</Label>
                 <TextInput
                   type="number"
-                  value={productData.countInStock || ""}
-                  onChange={(e) => setProductData({ ...productData, countInStock: parseFloat(e.target.value) })}
+                  value={productData.sizes?.reduce((total, item) => total + item.quantity, 0) || 0 }
+                  // onChange={(e)=>setProductData({})}
+                  onChange={(e) => setProductData({ ...productData,  countInStock: parseFloat(e.target.value) })}
                 />
               </div>
-              <div className="lg:col-span-2">
+
+              <div className="">
                 <Label>Descripción</Label>
                 <Textarea
                   rows={3}
@@ -552,7 +895,16 @@ import {
       </Modal>
     );
   };
-    
+  
+
+
+
+
+
+
+
+
+
   
   const ProductsTable = ({ products }: { products: Product[] }) => {
     
@@ -652,84 +1004,100 @@ import {
       //   </Table.Body>
       // </Table>
       <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-  <Table.Head className="bg-gray-100 dark:bg-gray-700">
-    <Table.HeadCell>ID</Table.HeadCell>
-    <Table.HeadCell>Imagen</Table.HeadCell>
-    <Table.HeadCell>Nombre</Table.HeadCell>
-    <Table.HeadCell>Descripcion</Table.HeadCell>
-    <Table.HeadCell>Marca</Table.HeadCell>
-    <Table.HeadCell>Precio</Table.HeadCell>
-    <Table.HeadCell>Stock</Table.HeadCell>
-    <Table.HeadCell>Status</Table.HeadCell>
-    <Table.HeadCell>Acciones</Table.HeadCell>
-  </Table.Head>
-  <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-    {products.map((product: Product) => (
-      <Table.Row key={product._id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
+        <Table.Head className="bg-gray-100 dark:bg-gray-700">
+          <Table.HeadCell>ID</Table.HeadCell>
+          <Table.HeadCell>Imagen</Table.HeadCell>
+          <Table.HeadCell>Nombre</Table.HeadCell>
+          <Table.HeadCell>Descripcion</Table.HeadCell>
+          <Table.HeadCell>Marca</Table.HeadCell>
+          <Table.HeadCell>Precio</Table.HeadCell>
+          <Table.HeadCell>Tallas y Disponibilidad</Table.HeadCell>
+          <Table.HeadCell>Stock Total</Table.HeadCell>
+          <Table.HeadCell>Status</Table.HeadCell>
+          <Table.HeadCell>Acciones</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+          {products.map((product: Product) => (
+            <Table.Row key={product._id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
 
-        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
-          {product._id}
-        </Table.Cell>
+              <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+                {product._id}
+              </Table.Cell>
 
-        <Table.Cell className="w-4 p-4">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="h-16 w-16 object-cover rounded"
-          />
-        </Table.Cell>
-{/* className="whitespace-normal break-words p-4 text-sm font-normal text-gray-500 dark:text-gray-400" */}
-        <Table.Cell >
-          <div className={product.status_Active  ? "text-base font-semibold text-gray-900 dark:text-white": "text-gray-500 line-through"}  >
-            {product.name}
+              <Table.Cell className="w-4 p-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-16 w-16 object-cover rounded"
+                />
+              </Table.Cell>
+      {/* className="whitespace-normal break-words p-4 text-sm font-normal text-gray-500 dark:text-gray-400" */}
+              <Table.Cell >
+                <div className={product.status_Active  ? "text-base font-semibold text-gray-900 dark:text-white": "text-gray-500 line-through"}  >
+                  {product.name}
+                </div>
+              </Table.Cell>
+
+              <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+                {product.description}
+              </Table.Cell>
+
+              <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+                {product.brand}
+              </Table.Cell>
+
+              <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
+                {product.price}
+              </Table.Cell>
+
+              <Table.Cell className={product.status_Active ?  "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white"   : "text-gray-500 line-through"  }>
+                
+                <div className="flex flex-wrap gap-2">
+                  {product.sizes.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 px-3 py-1 border border-gray-300  bg-gray-50"
+                    >
+                      <span className="font-bold text-gray-900">Talla: {item.size}</span>
+                      <span className="text-gray-500">Stock: {item.quantity}</span>
+                    </div>
+                  ))}
+                </div>
+              </Table.Cell>
+
+              <Table.Cell className={product.status_Active ?  "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white"   : "text-gray-500 line-through"  }>  
+                {product.countInStock}
+              </Table.Cell>
+
+              <Table.Cell className="whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white">
+                {product.status_Active ? (
+                  <div>
+                    <p>Activo</p>
+                  </div>
+                ) : (
+                  <div className="text-gray-500 line-through">
+                    <p>Inactivo</p>
+                  </div>
+                )}
+              </Table.Cell>
+
+              <Table.Cell className="whitespace-normal break-words p-4">
+                {/* Alineación horizontal de los botones */}
+                <div className="flex items-center space-x-2">
+                  <Button color="primary" onClick={() => handleEditClick(product)}>
+                    <FaEdit className="text-sm" />
+                  </Button>
+                  <DeleteProductModal product={product} />
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+
+          {/* Modal de edición */}
+          <div className="flex items-center gap-x-3">
+            <EditProductModal product={selectedProduct} isOpen={isEditOpen} setOpen={setEditOpen} />
           </div>
-        </Table.Cell>
-
-        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
-          {product.description}
-        </Table.Cell>
-
-        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
-          {product.brand}
-        </Table.Cell>
-
-        <Table.Cell className={product.status_Active  ? "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white": "text-gray-500 line-through"}>
-          {product.price}
-        </Table.Cell>
-
-        <Table.Cell className={product.status_Active ?  "whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white"   : "text-gray-500 line-through"  }>
-          {product.countInStock}
-        </Table.Cell>
-
-        <Table.Cell className="whitespace-normal break-words p-4 text-base font-medium text-gray-900 dark:text-white">
-          {product.status_Active ? (
-            <div>
-              <p>Activo</p>
-            </div>
-          ) : (
-            <div className="text-gray-500 line-through">
-              <p>Inactivo</p>
-            </div>
-          )}
-        </Table.Cell>
-
-        <Table.Cell className="whitespace-normal break-words p-4">
-          {/* Alineación horizontal de los botones */}
-          <div className="flex items-center space-x-2">
-            <Button color="primary" onClick={() => handleEditClick(product)}>
-              <FaEdit className="text-sm" />
-            </Button>
-            <DeleteProductModal product={product} />
-          </div>
-        </Table.Cell>
-      </Table.Row>
-    ))}
-
-    {/* Modal de edición */}
-    <div className="flex items-center gap-x-3">
-      <EditProductModal product={selectedProduct} isOpen={isEditOpen} setOpen={setEditOpen} />
-    </div>
-  </Table.Body>
+        </Table.Body>
       </Table>
 
     );
