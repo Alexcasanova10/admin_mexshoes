@@ -52,7 +52,7 @@ const MainContentFooter: FC = function () {
             </Footer.Link>
 
             <Footer.Link href="#" className="mr-3">
-              Política de Cookies
+                Política de Cookies
             </Footer.Link>
             <Footer.Link href="#">Contacto</Footer.Link>
           </Footer.LinkGroup>

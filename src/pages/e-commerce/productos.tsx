@@ -731,7 +731,7 @@ import {
   
     useEffect(() => {
       if (product) {
-        setProductData(product); // Rellenar los datos cuando se seleccione un producto
+        setProductData(product);  
       }
     }, [product]);
 

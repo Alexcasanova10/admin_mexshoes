@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import {productListReducer} from './Reducers/Product';
 import {orderListReducer} from './Reducers/Order';
 import { authReducer } from "./Reducers/User";
+import { bandListReducer } from './Reducers/Banda'; 
 
 
 const store = configureStore({
@@ -9,6 +10,8 @@ const store = configureStore({
     auth: authReducer,
     productListReducer: productListReducer,
     orderListReducer: orderListReducer,
+    bandListReducer: bandListReducer
+
   },
 });
 
